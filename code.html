@@ -1,0 +1,240 @@
+
+
+<html>
+
+ <head>
+        
+        <title>
+            webCodeRunner
+        </title>
+     
+     
+          <link rel="shortcut icon" 
+            type="image/png" 
+            href="https://ourcodeworld.com/assets/brand/ocw_logo_255.png">
+
+        <script type="text/javascript" src="jquery.min.js"></script>
+        
+        <script src="jquery-ui/jquery-ui.js"></script>
+        
+        <link href="jquery-ui/jquery-ui.css" rel="stylesheet">
+     
+     
+        <style type="text/css">
+            
+            body{
+                font-family: sans-serif;
+                padding:0;
+                margin:0;
+                
+                }
+            
+            #topbar {
+                width:100%;
+                height:28px;
+                background-color: #EEEEEE;
+                padding:5px;
+            }
+            
+            #buttoncontainer{
+                width:233px;
+                margin:0 auto;
+                position: relative;
+                left:8px;
+                
+            }
+            
+            #codeplayer{
+                float: left;
+                font-weight: bolder;
+                font-size:120%;
+                padding-top:4px;
+                padding-left: 35px;
+            }
+            
+            .togglebutton{
+                float: left;
+                border:1px solid grey;
+                padding:6px;
+                border-right: none;        
+                font-size:90%;
+                
+            }
+            
+            #panelContainer{
+                width:100%;
+                height:20px;
+                background-color: aqua;
+                font-style: italic;
+                
+            }
+            
+            .panelName{
+        
+                float: left;
+            }
+            
+            #panelhtml{
+                padding-left: 5px;
+                position: fixed;
+            }
+            
+            #panelcss{
+                position:fixed;
+                left: 450px;
+            }
+            
+            #paneljs{
+                position: fixed;
+                left: 675px;
+            
+            }
+            
+            #panelop{
+                position: fixed;
+                left: 1010px;
+            }
+    
+            .hidepanelname{
+                display: none;
+            }
+            
+            #html{
+                border-top-left-radius: 4px;
+                border-bottom-left-radius: 4px;
+                
+            }
+        
+            #op{
+                border-top-right-radius: 4px;
+                border-bottom-right-radius: 4px;
+                border-right: 1px solid gray;                
+            }
+            
+            .active{
+                background-color: skyblue;
+                
+            }
+            
+            .highlighted{
+                background-color: #E4E4E4;
+                
+            }
+            
+            textarea{
+                width:50%;
+                resize: :none;         
+                border-top: none;
+                border-color:gray;
+                font-size:110%;
+            }
+            
+            .panel{
+                float: left;
+                width:50%;         
+                border-left:none;
+            }
+            
+            iframe{
+                border:none;
+                font-size: 130%;
+                padding-left: 5px;
+            }
+            
+            .hidden{
+                display:none;
+                
+            }
+            
+            .touch{
+                background-color: lavender;                
+            }
+            
+            
+            #logo{
+                position: absolute;
+                float: left;
+                padding-left: 5px;
+            }
+        
+            
+        </style>
+     
+     
+        
+    </head>
+
+    
+    
+    <body>
+        
+        <div id="topbar">
+            <div id="codeplayer">webCodeRunner</div>
+            <div id="logo">
+                <img src="logo.png" height="25" width="25">
+            </div>
+            <div id="buttoncontainer">
+                <div class="togglebutton active" id="html">HTML</div>
+                <div class="togglebutton" id="css">CSS</div>
+                <div class="togglebutton" id="js">JavaScript</div>
+                <div class="togglebutton active" id="op">Output</div>
+                
+            </div>
+        </div> 
+        
+        <div id="panelContainer">
+            <div id="panelhtml" class="panelName">HTML</div>
+            <div id="panelcss" class="panelName hidepanelname">CSS</div>
+            <div id="paneljs" class="panelName hidepanelname">JS</div>
+            <div id="panelop" class="panelName">Output</div>
+        </div>
+        
+        <div id="bodyContainer">
+            <textarea id="htmlpanel" class="panel"><p id="para">Hello World!</p></textarea>
+            <textarea id="csspanel"  class="panel hidden" >p{color : blue;}</textarea>
+            <textarea id="jspanel"   class="panel hidden">document.getElementById("para").innerHTML = "Hello World";</textarea>
+            <iframe id="outputpanel" class="panel"></iframe>            
+        </div>
+        <script type="text/javascript">
+            function updateOut(){
+                $("iframe").contents().find("html").html("<html><head><style type='text/css'>" + $("#csspanel").val() + "</style></head><body>" + $("#htmlpanel").val() + "</body></html>");
+                document.getElementById("outputpanel").contentWindow.eval($("#jspanel").val());
+            }
+            
+            $(".togglebutton").hover(function() {
+                $(this).addClass("highlighted");
+            },function(){
+                $(this).removeClass("highlighted");
+            });
+            
+            $(".togglebutton").click(function(){
+                $(this).toggleClass("active");
+                $(this).removeClass("highlighted");
+                var panelname = "panel" + $(this).attr("id");
+                var panelid = $(this).attr("id") + "panel";
+                $("#"+panelid).toggleClass("hidden");
+                $("#"+panelname).toggleClass("hidepanelname")
+                var numberofacivepanels =4 - $('.hidden').length;
+                $(".panel").width(($(window).width()/numberofacivepanels)-10);
+            });
+            
+            $(".panel").height($(window).height()-$("#topbar").height()-15);
+            $(".panel").width(($(window).width()/2)-10);
+            updateOut();
+            $("textarea").on('change keyup paste',function(){
+                updateOut();   
+            });
+            $(".panel").hover(function(){
+                $(this).toggleClass("touch");
+            });    
+       
+            $("textarea").attr('spellcheck', false);
+    
+
+        </script>
+        
+        
+    </body>
+
+    
+</html>
