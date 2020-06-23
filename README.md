@@ -10,4 +10,4 @@ http://webcoderunner.herokuapp.com/webblocks.html
 * The editor is compatible with every major web browser without installing any program, extension or plugin. 
 
 ## GUI Screenshot
-  * ![GUI](/gui.png)
+   ![GUI](/gui.png)
